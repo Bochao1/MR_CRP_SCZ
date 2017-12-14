@@ -1,5 +1,5 @@
 ##-----------------------------------
-## Script name: replicate table 1 from Hartwig et al with 18 liberal threshod CRP SNPs 
+## Script name: replicate table 1 from Hartwig et al with 18 liberal threshold CRP SNPs. 
 ##      author: Bochao Lin
 ##        date: 7th Dec 2017
 ##-------------------------------------
@@ -27,7 +27,7 @@ outcome_dat_scz <- extract_outcome_data(snps=snp18, outcomes=22, proxies = TRUE,
 pubdata <- harmonise_data(crp_18, outcome_dat_scz,action=1)
 pubdata$beta.outcome=round(pubdata$beta.outcome,4)
 subset(pubdata,select=c(SNP,effect_allele.exposure,other_allele.exposure,effect_allele.outcome,other_allele.outcome,
-                        beta.exposure,target_a1.outcome,beta.outcome,se.outcome))
+                        beta.exposure,se.exposure,beta.outcome,se.outcome))
 ## after data harmonization, the effect allele of rs9987289 is different from Hartwig.
 ### Issues
 crp_18[crp_18$SNP=="rs9987289",]
@@ -84,10 +84,10 @@ com.res=rbind(res_TwosampleMR,resMR2,resManual)
 View(com.res)
 # Conclusions: 
 # 1. We used a different  effect allele for rs9987289 on CRP than Hartwig et al.
-# 2. The esitimations from two packages and manually script are same.
+# 2. The estimations from two packages and our own script are the same.
 
 #-----------------
-#-----------------Part 2:  Use hartiwig supplment etable 2 as input data (no rounding), and do MR analyses.
+#-----------------Part 2:  Use Hartwig et al supplement etable 2 as input data (no rounding), and do MR analyses.
 #-----------------
 bx=c(0.1600,0.2360,0.1490,0.0900,0.0790,0.0720,
      0.0470,0.0500,0.0690,0.0390,0.0880,0.0320,
@@ -118,7 +118,7 @@ round(exp(c(x@Intercept,x@CILower.Int,x@CIUpper.Int)),2)
 x=MendelianRandomization::mr_median(MRInputObject2)
 round(exp(c(x@Estimate,x@CILower,x@CIUpper)),2)
 
-# Even when using the same input data as Hartwig et al, the estimations we get are different from Hartwig table 1.
+# Even when using the same input data as Hartwig et al, the estimates we get are different from Hartwig table 1.
 
 #-----------------
 #-----------------Part 3 replicate table 3 in Prins et al.
@@ -156,8 +156,6 @@ x=MendelianRandomization::mr_ivw(MRInputObject,model = 'fixed')
 round(exp(c(x@Estimate,x@CILower,x@CIUpper)),2)
 x=MendelianRandomization::mr_ivw(MRInputObject,model = 'random')
 round(exp(c(x@Estimate,x@CILower,x@CIUpper)),2)
-#IVW model results are consist with Prins results.
 
-
-
+#IVW model results are consistent with Prins et al results.
 
